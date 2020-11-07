@@ -50,5 +50,3 @@ public class Order {
         delivery.setOrder(this);
     }
 }
-
-지연로딩 Lazy EAGER 컬렉션 연관관계 메서드
