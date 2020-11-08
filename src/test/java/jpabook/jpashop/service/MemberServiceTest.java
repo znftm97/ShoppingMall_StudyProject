@@ -23,6 +23,7 @@ public class MemberServiceTest {
     @Autowired
     MemberRepository memberRepository;
 
+
     @Test
     public void 회원가입() throws Exception {
         //given
