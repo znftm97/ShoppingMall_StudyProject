@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header">
+    <title>Hello</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader" />
+
+    <div class="jumbotron">
+        <h1>Select</h1>
+        <p>
+            <a class="btn btn-lg btn-secondary" href="/items/createItemForm">Book</a>
+        </p>
+        <p>
+            <a class="btn btn-lg btn-dark" href="/items/createItemFormAlbum">Album</a>
+        </p>
+        <p>
+            <a class="btn btn-lg btn-info" href="/items/createItemFormMovie">Movie</a>
+        </p>
+    </div>
+
+    <div th:replace="fragments/footer :: footer" />
+</div> <!-- /container -->
+</body>
+</html>

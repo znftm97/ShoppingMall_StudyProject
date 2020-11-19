@@ -19,13 +19,22 @@ public class ItemController {
 
     private final ItemService itemService;
 
+    // 아이템 선택 페이지로 매핑
     @GetMapping("/items/new")
     public String createForm(Model model) {
+        //model.addAttribute("form", new BookForm());
+        return "items/createItemFormAll";
+    }
+
+    // Book 클릭시 등록 페이지로 매핑
+    @GetMapping("/items/createItemForm")
+    public String CreateBook(Model model){
         model.addAttribute("form", new BookForm());
         return "items/createItemForm";
     }
 
-    @PostMapping("items/new")
+    // 등록 페이지에서 버튼 클릭시 Book 생성 후 목록화면으로 이동
+    @PostMapping("items/new/Book")
     public String create(BookForm form) {
         Book book = new Book();
         book.setName(form.getName());
@@ -38,6 +47,7 @@ public class ItemController {
         return "redirect:/items";
     }
 
+    // 상품 목록 클릭시 리스트 화면으로 매핑
     @GetMapping("/items")
     public String list(Model model) {
         List<Item> items = itemService.findItems();
