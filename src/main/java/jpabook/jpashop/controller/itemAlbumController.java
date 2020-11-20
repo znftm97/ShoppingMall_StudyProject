@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
@@ -28,9 +30,11 @@ public class itemAlbumController {
         album.setStockQuantity(form.getStockQuantity());
         album.setArtist(form.getArtist());
         album.setEtc(form.getEtc());
-        album.setItemType("album");
+        album.setItemType("Album");
 
         itemService.saveItem(album);
         return "redirect:/items";
     }
+
+
 }
