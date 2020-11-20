@@ -28,6 +28,7 @@ public class itemAlbumController {
         album.setStockQuantity(form.getStockQuantity());
         album.setArtist(form.getArtist());
         album.setEtc(form.getEtc());
+        album.setItemType("album");
 
         itemService.saveItem(album);
         return "redirect:/items";

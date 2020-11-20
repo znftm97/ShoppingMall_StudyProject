@@ -23,6 +23,7 @@ public abstract class Item {
     private String name;
     private int price;
     private int stockQuantity;
+    private String itemType; // 어떤 아이템인지 식별하기 위함
 
     @ManyToMany(mappedBy = "items")
     private List<Category> categories = new ArrayList<>();

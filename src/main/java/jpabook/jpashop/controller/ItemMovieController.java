@@ -28,6 +28,7 @@ public class ItemMovieController {
         movie.setStockQuantity(form.getStockQuantity());
         movie.setActor(form.getActor());
         movie.setDirector(form.getDirector());
+        movie.setItemType("Movie");
 
         itemService.saveItem(movie);
         return "redirect:/items";
