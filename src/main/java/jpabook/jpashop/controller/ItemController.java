@@ -3,6 +3,7 @@ package jpabook.jpashop.controller;
 import jpabook.jpashop.domain.item.Album;
 import jpabook.jpashop.domain.item.Book;
 import jpabook.jpashop.domain.item.Item;
+import jpabook.jpashop.domain.item.Movie;
 import jpabook.jpashop.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -24,7 +25,7 @@ public class ItemController {
     @GetMapping("/items/new")
     public String createForm(Model model) {
         //model.addAttribute("form", new BookForm());
-        return "items/createItemFormAll";
+        return "items/SelectItem";
     }
 
     // Book 클릭시 등록 페이지로 매핑
@@ -63,30 +64,40 @@ public class ItemController {
         Item item = itemService.findOne(itemId);
 
         if(item.getItemType() == "Book"){
+            Book itemBook = (Book) itemService.findOne(itemId);
             BookForm form = new BookForm();
             form.setId(item.getId());
             form.setName(item.getName());
             form.setPrice(item.getPrice());
             form.setStockQuantity(item.getStockQuantity());
+            form.setIsbn(itemBook.getIsbn());
+            form.setAuthor(itemBook.getAuthor());
+
             model.addAttribute("form", form);
             return "items/updateItemForm";
 
         }else if(item.getItemType() == "Movie"){
+            Movie itemMovie = (Movie) itemService.findOne(itemId);
             MovieForm form = new MovieForm();
             form.setId(item.getId());
             form.setName(item.getName());
             form.setPrice(item.getPrice());
             form.setStockQuantity(item.getStockQuantity());
+            form.setDirector(itemMovie.getDirector());
+            form.setActor(itemMovie.getDirector());
 
             model.addAttribute("form", form);
             return "items/updateItemFormMovie";
 
         }else if(item.getItemType() == "Album"){
+            Album itemAlbum = (Album) itemService.findOne(itemId);
             AlbumForm form = new AlbumForm();
             form.setId(item.getId());
             form.setName(item.getName());
             form.setPrice(item.getPrice());
             form.setStockQuantity(item.getStockQuantity());
+            form.setArtist(itemAlbum.getArtist());
+            form.setEtc(itemAlbum.getEtc());
 
             model.addAttribute("form", form);
             return "items/updateItemFormAlbum";
@@ -100,8 +111,15 @@ public class ItemController {
     //상품 수정
     @PostMapping("items/{itemId}/edit")
     public String updateItem(@ModelAttribute("form") ItemForm form) {
-
-        itemService.updateItem(form.getId(), form.getName(), form.getPrice(), form.getStockQuantity());
+        Item item = itemService.findOne(form.getId());
+        /*itemService.updateItem(form.getId(), form.getName(), form.getPrice(), form.getStockQuantity());*/
+        if(item.getItemType() == "Book"){
+            itemService.updateBook(form.getId(), form.getName(), form.getPrice(), form.getStockQuantity(), form.getAuthor(), form.getIsbn());
+        }else if(item.getItemType() == "Movie"){
+            itemService.updateMovie(form.getId(), form.getName(), form.getPrice(), form.getStockQuantity(), form.getDirector(), form.getActor());
+        }else if(item.getItemType() == "Album"){
+            itemService.updateAlbum(form.getId(), form.getName(), form.getPrice(), form.getStockQuantity(), form.getArtist(), form.getEtc());
+        }
         return "redirect:/items";
     }
 }
