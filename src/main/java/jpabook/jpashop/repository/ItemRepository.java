@@ -36,9 +36,7 @@ public class ItemRepository {
     public Book findBook(Long id){
         return em.find(Book.class, id);
     }
-    public Movie findMovie(Long id){
-        return em.find(Movie.class, id);
-    }
+    public Movie findMovie(Long id){ return em.find(Movie.class, id); }
     public Album findAlbum(Long id){
         return em.find(Album.class, id);
     }
