@@ -80,11 +80,12 @@ public class InitDb {
         }
 
         private Book createBook(String name, int price, int stockQuantity) {
-            Book book1 = new Book();
-            book1.setName(name);
-            book1.setPrice(price);
-            book1.setStockQuantity(stockQuantity);
-            return book1;
+            Book book = new Book();
+            book.setName(name);
+            book.setPrice(price);
+            book.setStockQuantity(stockQuantity);
+            book.setItemType("Book");
+            return book;
         }
 
         private Member createMember(String name, String city, String street, String zipcode) {
