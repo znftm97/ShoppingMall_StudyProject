@@ -112,7 +112,6 @@ public class ItemController {
     @PostMapping("items/{itemId}/edit")
     public String updateItem(@ModelAttribute("form") ItemForm form) {
         Item item = itemService.findOne(form.getId());
-        /*itemService.updateItem(form.getId(), form.getName(), form.getPrice(), form.getStockQuantity());*/
         if(item.getItemType() == "Book"){
             itemService.updateBook(form.getId(), form.getName(), form.getPrice(), form.getStockQuantity(), form.getAuthor(), form.getIsbn());
         }else if(item.getItemType() == "Movie"){
