@@ -6,10 +6,9 @@ import jpabook.jpashop.domain.OrderItem;
 import jpabook.jpashop.domain.OrderStatus;
 import jpabook.jpashop.repository.OrderRepository;
 import jpabook.jpashop.repository.OrderSearch;
-import jpabook.jpashop.repository.order.query.OrderFlatDto;
 import jpabook.jpashop.repository.order.query.OrderQueryDto;
 import jpabook.jpashop.repository.order.query.OrderQueryRepository;
-import lombok.Getter;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,9 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static java.util.stream.Collectors.groupingBy;
-import static org.yaml.snakeyaml.nodes.NodeId.mapping;
 
 @RestController
 @RequiredArgsConstructor
@@ -111,10 +107,8 @@ public class OrderApiController {
                 .collect(toList());
     }*/
 
-}
-
     /*--------DTO--------*/
-    @Getter
+    @Data
     static class OrderDto {
 
         private Long orderId;
@@ -136,7 +130,7 @@ public class OrderApiController {
         }
     }
 
-    @Getter
+    @Data
     static class OrderItemDto{
 
         private String itemName;
@@ -149,5 +143,4 @@ public class OrderApiController {
             count = orderItem.getCount();
         }
     }
-
 }

@@ -5,7 +5,6 @@ import jpabook.jpashop.domain.OrderStatus;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 //쿼리 한번에 필요한 모든 데이터 뽑아오기 위한 DTO
