@@ -28,7 +28,7 @@ public class OrderController {
     private final OrderService orderService;
     private final MemberService memberService;
     private final ItemService itemService;
-    private final OrderItemRepository orderItemRepository;
+    /*private final OrderItemRepository orderItemRepository;*/
 
     @GetMapping("/order")
     public String createForm(Model model) {
@@ -53,12 +53,13 @@ public class OrderController {
     @GetMapping("/orders")
     public String orderList(@ModelAttribute("orderSearch") OrderSearch orderSearch, Model model) {
 
-        /*List<Order> orders = orderService.findOrders(orderSearch); // 바로 orderRepository.findAllByString(orderSearch) 호출해도 됨
+        List<Order> orders = orderService.findOrders(orderSearch); // 바로 orderRepository.findAllByString(orderSearch) 호출해도 됨
 
-        model.addAttribute("orders", orders);*/
+        model.addAttribute("orders", orders);
 
+        /*모든 주문 내역 출력, 그러나 검색 못함..
         List<OrderItem> orderItems = orderItemRepository.findAll();
-        model.addAttribute("orders", orderItems);
+        model.addAttribute("orders", orderItems);*/
 
         return "order/orderList";
     }
