@@ -46,6 +46,7 @@ public class MemberController {
         return "redirect:/members";
     }
 
+    //페이징
     @GetMapping("/members")
     public String list(@PageableDefault(size = 5, sort = "id") Pageable pageable, Model model){
         Page<Member> page = sdj.findAll(pageable);

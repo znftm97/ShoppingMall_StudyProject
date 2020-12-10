@@ -55,6 +55,46 @@
             </tr>
             </tbody>
         </table>
+
+        <nav style="text-align: center;">
+            <ul class="pagination justify-content-center"
+                th:with="start=${T(Math).floor(orders.number/10)*10 + 1},
+                    last=(${start + 9 < orders.totalPages ? start + 9 : orders.totalPages})">
+
+                <!--  first  -->
+                <li class="page-item">
+                    <a class="page-link" th:href="@{/orders(page=0)}" aria-label="First">
+                        <span aria-hidden="true">First</span>
+                    </a>
+                </li>
+
+                <!--  <  -->
+                <li class="page-item">
+                    <a class="page-link" th:href="${orders.first} ? '#' :@{/orders(page=${orders.number - 1})}" aria-label="Previous" >
+                        <span aria-hidden="true">&lt;</span>
+                    </a>
+                </li>
+
+                <!--  1,2,3  -->
+                <li class="page-item" th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == orders.number + 1} ? 'page-item active'">
+                    <a class="page-link" th:text="${page}" th:href="@{/orders(page=${page - 1})}"></a>
+                </li>
+
+                <!--  > -->
+                <li class="page-item" th:class="${orders.last} ? 'disabled'">
+                    <a class="page-link" th:href="${orders.last} ? '#' : @{/orders(page=${orders.number + 1})}" aria-label="Next">
+                        <span aria-hidden="true">&gt;</span>
+                    </a>
+                </li>
+
+                <!--  Last  -->
+                <li class="page-item">
+                    <a class="page-link" th:href="@{/orders(page=${orders.totalPages - 1})}" aria-label="Last">
+                        <span aria-hidden="true">Last</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
     </div>
     <div th:replace="fragments/footer :: footer"/>
 </div> <!-- /container -->

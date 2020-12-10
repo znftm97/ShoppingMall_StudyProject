@@ -4,8 +4,12 @@ import jpabook.jpashop.domain.item.Album;
 import jpabook.jpashop.domain.item.Book;
 import jpabook.jpashop.domain.item.Item;
 import jpabook.jpashop.domain.item.Movie;
+import jpabook.jpashop.repository.ItemRepositorySDJ;
 import jpabook.jpashop.service.ItemService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +24,7 @@ import java.util.List;
 public class ItemController {
 
     private final ItemService itemService;
+    private final ItemRepositorySDJ sdj;
 
     // 아이템 선택 페이지로 매핑
     @GetMapping("/items/new")
@@ -50,10 +55,11 @@ public class ItemController {
         return "redirect:/items";
     }
 
-    // 상품 목록 클릭시 리스트 화면으로 매핑
+    // 상품 목록 클릭시 리스트 화면으로 매핑 , 페이징
     @GetMapping("/items")
-    public String list(Model model) {
-        List<Item> items = itemService.findItems();
+    public String list(@PageableDefault(size = 5, sort = "id") Pageable pageable, Model model) {
+        //List<Item> items = itemService.findItems();
+        Page<Item> items = sdj.findAll(pageable);
         model.addAttribute("items", items);
         return "items/itemList";
     }
@@ -121,4 +127,5 @@ public class ItemController {
         }
         return "redirect:/items";
     }
+
 }

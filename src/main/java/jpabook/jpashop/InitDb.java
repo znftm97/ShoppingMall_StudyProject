@@ -1,8 +1,11 @@
 package jpabook.jpashop;
 
 import jpabook.jpashop.domain.*;
+import jpabook.jpashop.domain.item.Album;
 import jpabook.jpashop.domain.item.Book;
+import jpabook.jpashop.domain.item.Movie;
 import lombok.RequiredArgsConstructor;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,8 +19,10 @@ import javax.persistence.EntityManager;
  *      JPA2 BOOK
  * * userB
  *      SPRING1 BOOK
- *      SPRING2 BOOK
- */
+ *      SPRING2
+ *      */
+
+
 @Component
 @RequiredArgsConstructor
 public class InitDb {
@@ -78,6 +83,51 @@ public class InitDb {
             Member member1 = createMember("userC", "인천", "3", "3333");
             em.persist(member1);
 
+            Album album1 = createAlbum("a", 100, 100);
+            em.persist(album1);
+            Album album2 = createAlbum("b", 100, 100);
+            em.persist(album2);
+            Album album3 = createAlbum("c", 100, 100);
+            em.persist(album3);
+            Album album4 = createAlbum("d", 100, 100);
+            em.persist(album4);
+            Album album5 = createAlbum("e", 100, 100);
+            em.persist(album5);
+            Album album6 = createAlbum("f", 100, 100);
+            em.persist(album6);
+            Movie movie1 = createMovie("g", 100, 100);
+            em.persist(movie1);
+            Movie movie2 = createMovie("h", 100, 100);
+            em.persist(movie2);
+            Movie movie3 = createMovie("i", 100, 100);
+            em.persist(movie3);
+            Movie movie4 = createMovie("j", 100, 100);
+            em.persist(movie4);
+            Movie movie5 = createMovie("k", 100, 100);
+            em.persist(movie5);
+            Movie movie6 = createMovie("m", 100, 100);
+            em.persist(movie6);
+
+            OrderItem orderItem1 = OrderItem.createOrderItem(album5, 100, 2);
+            Delivery delivery1 = createDelivery(member1);
+            Order order1 = Order.createOrder(member1, delivery1, orderItem1);
+            em.persist(order1);
+
+            OrderItem orderItem2 = OrderItem.createOrderItem(album6, 100, 20);
+            Delivery delivery2 = createDelivery(member1);
+            Order order2 = Order.createOrder(member1, delivery2, orderItem2);
+            em.persist(order2);
+
+            OrderItem orderItem3 = OrderItem.createOrderItem(movie1, 100, 30);
+            Delivery delivery3 = createDelivery(member1);
+            Order order3 = Order.createOrder(member1, delivery3, orderItem3);
+            em.persist(order3);
+
+            OrderItem orderItem4 = OrderItem.createOrderItem(album2, 100, 40);
+            Delivery delivery4 = createDelivery(member1);
+            Order order4 = Order.createOrder(member1, delivery4, orderItem4);
+            em.persist(order4);
+
             Member member2 = createMember("userD", "인천", "4", "4444");
             em.persist(member2);
 
@@ -117,6 +167,25 @@ public class InitDb {
             book.setItemType("Book");
             return book;
         }
+
+        private Album createAlbum(String name, int price, int stockQuantity) {
+            Album album = new Album();
+            album.setName(name);
+            album.setPrice(price);
+            album.setStockQuantity(stockQuantity);
+            album.setItemType("Album");
+            return album;
+        }
+
+        private Movie createMovie(String name, int price, int stockQuantity) {
+            Movie movie = new Movie();
+            movie.setName(name);
+            movie.setPrice(price);
+            movie.setStockQuantity(stockQuantity);
+            movie.setItemType("Movie");
+            return movie;
+        }
+
 
         private Member createMember(String name, String city, String street, String zipcode) {
             Member member = new Member();
