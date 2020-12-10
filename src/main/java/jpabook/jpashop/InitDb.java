@@ -28,6 +28,7 @@ public class InitDb {
     public void init(){
         initService.dbInit1();
         initService.dbInit2();
+        initService.dbInit3();
     }
 
     @Component
@@ -72,6 +73,35 @@ public class InitDb {
             Order order = Order.createOrder(member, delivery, orderItem1, orderItem2);
             em.persist(order);
         } // dbInit2
+
+        public void dbInit3(){
+            Member member1 = createMember("userC", "인천", "3", "3333");
+            em.persist(member1);
+
+            Member member2 = createMember("userD", "인천", "4", "4444");
+            em.persist(member2);
+
+            Member member3 = createMember("userE", "인천", "5", "5555");
+            em.persist(member3);
+
+            Member member4 = createMember("userF", "인천", "6", "6666");
+            em.persist(member4);
+
+            Member member5 = createMember("userG", "인천", "7", "7777");
+            em.persist(member5);
+
+            Member member6 = createMember("userH", "인천", "8", "8888");
+            em.persist(member6);
+
+            Member member7 = createMember("userI", "인천", "9", "9999");
+            em.persist(member7);
+
+            Member member8 = createMember("userJ", "인천", "1-", "10");
+            em.persist(member8);
+
+            Member member9 = createMember("userK", "인천", "11", "11");
+            em.persist(member9);
+        } // dbInit3
 
         private Delivery createDelivery(Member member) {
             Delivery delivery = new Delivery();

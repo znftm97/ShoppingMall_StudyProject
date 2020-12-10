@@ -4,6 +4,7 @@
 <body>
 <div class="container">
     <div th:replace="fragments/bodyHeader :: bodyHeader" />
+
     <div>
         <table class="table table-striped">
             <thead>
@@ -25,7 +26,47 @@
                 </tr>
             </tbody>
         </table>
-    </div>
+
+        <nav style="text-align: center;">
+            <ul class="pagination justify-content-center"
+                th:with="start=${T(Math).floor(members.number/10)*10 + 1},
+                    last=(${start + 9 < members.totalPages ? start + 9 : members.totalPages})">
+
+                <!--  first  -->
+                <li class="page-item">
+                    <a class="page-link" th:href="@{/members(page=0)}" aria-label="First">
+                        <span aria-hidden="true">First</span>
+                    </a>
+                </li>
+
+                <!--  <  -->
+                <li class="page-item">
+                    <a class="page-link" th:href="${members.first} ? '#' :@{/members(page=${members.number - 1})}" aria-label="Previous" >
+                        <span aria-hidden="true">&lt;</span>
+                    </a>
+                </li>
+
+                <!--  1,2,3  -->
+                <li class="page-item" th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == members.number + 1} ? 'page-item active'">
+                    <a class="page-link" th:text="${page}" th:href="@{/members(page=${page - 1})}"></a>
+                </li>
+
+                <!--  > -->
+                <li class="page-item" th:class="${members.last} ? 'disabled'">
+                    <a class="page-link" th:href="${members.last} ? '#' : @{/members(page=${members.number + 1})}" aria-label="Next">
+                        <span aria-hidden="true">&gt;</span>
+                    </a>
+                </li>
+
+                <!--  Last  -->
+                <li class="page-item">
+                    <a class="page-link" th:href="@{/members(page=${members.totalPages - 1})}" aria-label="Last">
+                        <span aria-hidden="true">Last</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
     <div th:replace="fragments/footer :: footer" />
 </div> <!-- /container -->
 </body>
