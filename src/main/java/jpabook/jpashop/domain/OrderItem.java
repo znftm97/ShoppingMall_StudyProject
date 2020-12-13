@@ -23,6 +23,7 @@ public class OrderItem {
     @JoinColumn(name = "item_id")
     private Item item;
 
+
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id")
@@ -42,6 +43,16 @@ public class OrderItem {
         orderItem.setCount(count);
 
         item.removeStock(count);
+        return orderItem;
+    }
+
+    //==장바구니 생성 메서드==//
+    public static OrderItem createOrderItemBasket(Item item, int orderPrice, int count){
+        OrderItem orderItem = new OrderItem();
+        orderItem.setItem(item);
+        orderItem.setOrderPrice(orderPrice);
+        orderItem.setCount(count);
+
         return orderItem;
     }
 

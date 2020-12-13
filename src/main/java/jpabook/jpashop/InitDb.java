@@ -5,7 +5,6 @@ import jpabook.jpashop.domain.item.Album;
 import jpabook.jpashop.domain.item.Book;
 import jpabook.jpashop.domain.item.Movie;
 import lombok.RequiredArgsConstructor;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -127,6 +126,22 @@ public class InitDb {
             Delivery delivery4 = createDelivery(member1);
             Order order4 = Order.createOrder(member1, delivery4, orderItem4);
             em.persist(order4);
+
+            OrderItem orderItem5 = OrderItem.createOrderItemBasket(album2, 100, 40);
+            Delivery delivery5 = createDelivery(member1);
+            Order order5 = Order.createBasket(member1, delivery5, orderItem5);
+            em.persist(order5);
+
+            OrderItem orderItem6 = OrderItem.createOrderItemBasket(album2, 100, 40);
+            Delivery delivery6 = createDelivery(member1);
+            Order order6 = Order.createBasket(member1, delivery6, orderItem6);
+            em.persist(order6);
+
+            OrderItem orderItem7 = OrderItem.createOrderItemBasket(album2, 100, 40);
+            Delivery delivery7 = createDelivery(member1);
+            Order order7 = Order.createBasket(member1, delivery7, orderItem7);
+            em.persist(order7);
+
 
             Member member2 = createMember("userD", "인천", "4", "4444");
             em.persist(member2);

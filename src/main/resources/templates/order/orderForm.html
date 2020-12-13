@@ -5,7 +5,7 @@
 <div class="container">
     <div th:replace="fragments/bodyHeader :: bodyHeader"/>
 
-    <form role="form" action="/order" method="post">
+    <form role="form" method="post">
         <div class="form-group">
             <label for="member">주문회원</label>
             <select name="memberId" id="member" class="form-control">
@@ -31,7 +31,8 @@
             <input type="number" name="count" class="form-control" id="count"
                    placeholder="주문 수량을 입력하세요">
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button formaction="/order" type="submit" class="btn btn-primary">주문</button>
+        <button formaction="/baskets" type="submit" class="btn btn-success">장바구니에 담기</button>
     </form>
     <br/>
     <div th:replace="fragments/footer :: footer" />

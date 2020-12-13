@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: header"/>
+<body>
+<div class="container">
+    <div th:replace="fragments/bodyHeader :: bodyHeader"/>
+
+    <div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>회원명</th>
+                    <th>대표상품 이름</th>
+                    <th>대표상품 주문가격</th>
+                    <th>대표상품 주문수량</th>
+                    <th>일시</th>
+                    <th>상태</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr th:each="item : ${baskets}">
+                    <td th:text="${item.id}"></td>
+                    <td th:text="${item.member.name}"></td>
+                    <td th:text="${item.orderItems[0].item.name}"></td>
+                    <td th:text="${item.orderItems[0].orderPrice}"></td>
+                    <td th:text="${item.orderItems[0].count}"></td>
+                    <td th:text="${item.orderDate}"></td>
+                    <td th:text="${item.status}"></td>
+                    <td>
+                        <button formaction="/baskets" type="submit" class="btn btn-primary">주문</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+        <nav style="text-align: center;">
+            <ul class="pagination justify-content-center"
+                th:with="start=${T(Math).floor(baskets.number/10)*10 + 1},
+                    last=(${start + 9 < baskets.totalPages ? start + 9 : baskets.totalPages})">
+
+                <li class="page-item" >
+                    <a class="page-link" th:href="@{/baskets(page=0)}" aria-label="First">
+                        <span aria-hidden="true">First</span>
+                    </a>
+                </li>
+
+                <li class="page-item">
+                    <a class="page-link" th:href="${baskets.first} ? '#' :@{/baskets(page=${baskets.number - 1})}" aria-label="Previous" >
+                        <span aria-hidden="true">&lt;</span>
+                    </a>
+                </li>
+
+                <li class="page-item" th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == baskets.number + 1} ? 'page-item active'">
+                    <a class="page-link" th:text="${page}" th:href="@{/baskets(page=${page - 1})}"></a>
+                </li>
+
+                <li class="page-item" th:class="${baskets.last} ? 'disabled'">
+                    <a class="page-link" th:href="${baskets.last} ? '#' : @{/baskets(page=${baskets.number + 1})}" aria-label="Next">
+                        <span aria-hidden="true">&gt;</span>
+                    </a>
+                </li>
+
+                <li class="page-item">
+                    <a class="page-link" th:href="@{/baskets(page=${baskets.totalPages - 1})}" aria-label="Last">
+                        <span aria-hidden="true">Last</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div th:replace="fragments/footer :: footer"/>
+</div> <!-- /container -->
+</body>
+<script>
+</script>
+</html>

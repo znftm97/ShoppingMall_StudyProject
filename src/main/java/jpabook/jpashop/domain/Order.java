@@ -66,6 +66,20 @@ public class Order {
         return order;
     }
 
+    //==장바구니기능 생성 메서드==//
+    public static Order createBasket(Member member, Delivery delivery, OrderItem... orderItems){
+        Order order = new Order();
+        order.setMember(member);
+        order.setDelivery(delivery);
+        for(OrderItem orderItem : orderItems){
+            order.addOrderItem(orderItem);
+        }
+        order.setStatus(OrderStatus.BASKET);
+        order.setOrderDate(LocalDateTime.now());
+
+        return order;
+    }
+
     //==비즈니스 로직==//
 
     /**
