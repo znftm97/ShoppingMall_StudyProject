@@ -41,6 +41,10 @@ public class ItemRepository {
         return em.find(Album.class, id);
     }
 
+    public void removeStock(Item item){
+        item.removeStock(item.getStockQuantity());
+    }
+
     /*public String selectType(){
         return em.createQuery("select d from Item d", Item.class);
     }*/

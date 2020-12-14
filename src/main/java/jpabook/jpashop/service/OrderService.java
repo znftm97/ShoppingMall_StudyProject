@@ -1,9 +1,6 @@
 package jpabook.jpashop.service;
 
-import jpabook.jpashop.domain.Delivery;
-import jpabook.jpashop.domain.Member;
-import jpabook.jpashop.domain.Order;
-import jpabook.jpashop.domain.OrderItem;
+import jpabook.jpashop.domain.*;
 import jpabook.jpashop.domain.item.Item;
 import jpabook.jpashop.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -82,6 +79,13 @@ public class OrderService {
         // 각 아이템별로 리스트 뿌렸을때 취소 로직
         /*OrderItem orderItem = orderItemRepositorySDJ.findOne(orderID);
         orderItem.getOrder().cancel();*/
+    }
+
+    //OrderStatus ORDER로 변경
+    @Transactional
+    public void statusChangeOrder(Long id){
+        Order order = orderRepository.findOne(id);
+        order.setStatus(OrderStatus.ORDER);
     }
 
     //검색

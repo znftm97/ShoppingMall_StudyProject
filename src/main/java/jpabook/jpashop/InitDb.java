@@ -49,14 +49,11 @@ public class InitDb {
             Book book1 = createBook("JPA1 Book", 10000, 100);
             em.persist(book1);
 
-            Book book2 = createBook("JPA2 Book", 20000, 100);
-            em.persist(book2);
 
             OrderItem orderItem1 = OrderItem.createOrderItem(book1, 10000, 1);
-            OrderItem orderItem2 = OrderItem.createOrderItem(book2, 20000, 2);
 
             Delivery delivery = createDelivery(member);
-            Order order = Order.createOrder(member, delivery, orderItem1, orderItem2);
+            Order order = Order.createOrder(member, delivery, orderItem1);
             em.persist(order);
         } // dbInit1
 
@@ -67,20 +64,40 @@ public class InitDb {
             Book book1 = createBook("SPRING1 Book", 20000, 200);
             em.persist(book1);
 
-            Book book2 = createBook("SPRING2 Book", 40000, 300);
-            em.persist(book2);
-
             OrderItem orderItem1 = OrderItem.createOrderItem(book1, 20000, 3);
-            OrderItem orderItem2 = OrderItem.createOrderItem(book2, 40000, 4);
 
             Delivery delivery = createDelivery(member);
-            Order order = Order.createOrder(member, delivery, orderItem1, orderItem2);
+            Order order = Order.createOrder(member, delivery, orderItem1);
             em.persist(order);
         } // dbInit2
 
         public void dbInit3(){
             Member member1 = createMember("userC", "인천", "3", "3333");
             em.persist(member1);
+
+            Member member2 = createMember("userD", "인천", "4", "4444");
+            em.persist(member2);
+
+            Member member3 = createMember("userE", "인천", "5", "5555");
+            em.persist(member3);
+
+            Member member4 = createMember("userF", "인천", "6", "6666");
+            em.persist(member4);
+
+            Member member5 = createMember("userG", "인천", "7", "7777");
+            em.persist(member5);
+
+            Member member6 = createMember("userH", "인천", "8", "8888");
+            em.persist(member6);
+
+            Member member7 = createMember("userI", "인천", "9", "9999");
+            em.persist(member7);
+
+            Member member8 = createMember("userJ", "인천", "1-", "10");
+            em.persist(member8);
+
+            Member member9 = createMember("userK", "인천", "11", "11");
+            em.persist(member9);
 
             Album album1 = createAlbum("a", 100, 100);
             em.persist(album1);
@@ -113,59 +130,37 @@ public class InitDb {
             em.persist(order1);
 
             OrderItem orderItem2 = OrderItem.createOrderItem(album6, 100, 20);
-            Delivery delivery2 = createDelivery(member1);
-            Order order2 = Order.createOrder(member1, delivery2, orderItem2);
+            Delivery delivery2 = createDelivery(member2);
+            Order order2 = Order.createOrder(member2, delivery2, orderItem2);
             em.persist(order2);
 
             OrderItem orderItem3 = OrderItem.createOrderItem(movie1, 100, 30);
-            Delivery delivery3 = createDelivery(member1);
-            Order order3 = Order.createOrder(member1, delivery3, orderItem3);
+            Delivery delivery3 = createDelivery(member3);
+            Order order3 = Order.createOrder(member3, delivery3, orderItem3);
             em.persist(order3);
 
             OrderItem orderItem4 = OrderItem.createOrderItem(album2, 100, 40);
-            Delivery delivery4 = createDelivery(member1);
-            Order order4 = Order.createOrder(member1, delivery4, orderItem4);
+            Delivery delivery4 = createDelivery(member4);
+            Order order4 = Order.createOrder(member4, delivery4, orderItem4);
             em.persist(order4);
 
-            OrderItem orderItem5 = OrderItem.createOrderItemBasket(album2, 100, 40);
-            Delivery delivery5 = createDelivery(member1);
-            Order order5 = Order.createBasket(member1, delivery5, orderItem5);
+            OrderItem orderItem5 = OrderItem.createOrderItemBasket(album2, 100, 10);
+            Delivery delivery5 = createDelivery(member5);
+            Order order5 = Order.createBasket(member5, delivery5, orderItem5);
             em.persist(order5);
 
-            OrderItem orderItem6 = OrderItem.createOrderItemBasket(album2, 100, 40);
-            Delivery delivery6 = createDelivery(member1);
-            Order order6 = Order.createBasket(member1, delivery6, orderItem6);
+            OrderItem orderItem6 = OrderItem.createOrderItemBasket(movie3, 100, 20);
+            Delivery delivery6 = createDelivery(member6);
+            Order order6 = Order.createBasket(member6, delivery6, orderItem6);
             em.persist(order6);
 
-            OrderItem orderItem7 = OrderItem.createOrderItemBasket(album2, 100, 40);
-            Delivery delivery7 = createDelivery(member1);
-            Order order7 = Order.createBasket(member1, delivery7, orderItem7);
+            OrderItem orderItem7 = OrderItem.createOrderItemBasket(album3, 100, 30);
+            Delivery delivery7 = createDelivery(member7);
+            Order order7 = Order.createBasket(member7, delivery7, orderItem7);
             em.persist(order7);
 
 
-            Member member2 = createMember("userD", "인천", "4", "4444");
-            em.persist(member2);
 
-            Member member3 = createMember("userE", "인천", "5", "5555");
-            em.persist(member3);
-
-            Member member4 = createMember("userF", "인천", "6", "6666");
-            em.persist(member4);
-
-            Member member5 = createMember("userG", "인천", "7", "7777");
-            em.persist(member5);
-
-            Member member6 = createMember("userH", "인천", "8", "8888");
-            em.persist(member6);
-
-            Member member7 = createMember("userI", "인천", "9", "9999");
-            em.persist(member7);
-
-            Member member8 = createMember("userJ", "인천", "1-", "10");
-            em.persist(member8);
-
-            Member member9 = createMember("userK", "인천", "11", "11");
-            em.persist(member9);
         } // dbInit3
 
         private Delivery createDelivery(Member member) {

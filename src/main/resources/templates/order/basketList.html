@@ -30,7 +30,8 @@
                     <td th:text="${item.orderDate}"></td>
                     <td th:text="${item.status}"></td>
                     <td>
-                        <button formaction="/baskets" type="submit" class="btn btn-primary">주문</button>
+                        <a th:href="'javascript:order('+${item.id}+')'"
+                           class="btn btn-danger">주문</a>
                     </td>
                 </tr>
             </tbody>
@@ -76,5 +77,12 @@
 </div> <!-- /container -->
 </body>
 <script>
+    function order(id) {
+        var form = document.createElement("form");
+        form.setAttribute("method", "post");
+        form.setAttribute("action", "/basketsOrder/" + id + "/basket");
+        document.body.appendChild(form);
+        form.submit();
+    }
 </script>
 </html>

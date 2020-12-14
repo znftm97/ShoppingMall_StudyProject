@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -35,6 +36,7 @@ public class OrderController {
     private final OrderItemRepositorySDJ orderItemSdj;
     /*private final OrderItemRepository orderItemRepository;*/
 
+    //주문 화면
     @GetMapping("/order")
     public String createForm(Model model) {
         List<Member> members = memberService.findMembers();
@@ -46,13 +48,23 @@ public class OrderController {
         return "/order/orderForm";
     }
 
-    // 주문
+    //주문 버튼 클릭 매핑
     @PostMapping("/order")
     public String order(@RequestParam("memberId") Long memberId,
                         @RequestParam("itemId") Long itemId,
                         @RequestParam("count") int count){
 
         orderService.order(memberId, itemId, count);
+        return "redirect:/orders";
+    }
+
+    // 장바구니에서 바로 주문하기
+    @PostMapping("/basketsOrder/{orderId}/basket")
+    public String basketOrder(@PathVariable("orderId") Long orderId){
+        Order order = orderSdj.findByOrderId(orderId);
+
+        orderService.statusChangeOrder(orderId);
+
         return "redirect:/orders";
     }
 
@@ -87,7 +99,7 @@ public class OrderController {
         return "order/orderList";
     }
 
-    // 장바구니 목록
+    //장바구니 목록
     @GetMapping("/baskets")
     public String baksetList(Model model, @PageableDefault(size = 2, sort = "id") Pageable pageable){
         Page<Order> baskets = orderSdj.findByStatus(pageable, OrderStatus.BASKET);
@@ -97,7 +109,7 @@ public class OrderController {
         return "order/basketList";
     }
 
-    //장바구니에 담기
+    //장바구니에 담기 버튼
     @PostMapping("/baskets")
     public String basket(@RequestParam("memberId") Long memberId,
                         @RequestParam("itemId") Long itemId,
