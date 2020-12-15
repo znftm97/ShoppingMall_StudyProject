@@ -6,6 +6,7 @@ import jpabook.jpashop.domain.item.Item;
 import jpabook.jpashop.domain.item.Movie;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -41,8 +42,13 @@ public class ItemRepository {
         return em.find(Album.class, id);
     }
 
-    public void removeStock(Item item){
+    // 주문 수량을 넘겨야되는데 재고를 넘겨버려서 재고가 0이되버림
+    /*public void removeStock(Item item){
         item.removeStock(item.getStockQuantity());
+    }*/
+
+    public void removeStockCustom(Item item, int count){
+        item.removeStock(count);
     }
 
     /*public String selectType(){

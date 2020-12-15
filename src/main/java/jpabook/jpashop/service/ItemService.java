@@ -68,4 +68,11 @@ public class ItemService {
     public List<Item> findItems(){
         return itemRepository.findAll();
     }
+
+    @Transactional
+    public void removeStock(Item item, int count){
+        itemRepository.removeStockCustom(item, count);
+    }
+
+
 }

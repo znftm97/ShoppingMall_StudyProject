@@ -49,7 +49,6 @@ public class InitDb {
             Book book1 = createBook("JPA1 Book", 10000, 100);
             em.persist(book1);
 
-
             OrderItem orderItem1 = OrderItem.createOrderItem(book1, 10000, 1);
 
             Delivery delivery = createDelivery(member);
@@ -154,9 +153,11 @@ public class InitDb {
             Order order6 = Order.createBasket(member6, delivery6, orderItem6);
             em.persist(order6);
 
+            OrderItem orderItem8 = OrderItem.createOrderItemBasket(album5, 100, 30);
+
             OrderItem orderItem7 = OrderItem.createOrderItemBasket(album3, 100, 30);
             Delivery delivery7 = createDelivery(member7);
-            Order order7 = Order.createBasket(member7, delivery7, orderItem7);
+            Order order7 = Order.createBasket(member7, delivery7, orderItem7, orderItem8);
             em.persist(order7);
 
 
