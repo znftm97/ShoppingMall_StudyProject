@@ -51,6 +51,19 @@ public class ItemRepository {
         item.removeStock(count);
     }
 
+    public int getStockQuantityCustom(Item item){
+        return item.getStockQuantity();
+    }
+
+    //재고보다 주문 개수가 크면 안됨
+    public void countValidate(Item item, int count){
+        if (item.getStockQuantity() < count)
+        {
+            // 재고 부족
+        }
+
+    }
+
     /*public String selectType(){
         return em.createQuery("select d from Item d", Item.class);
     }*/

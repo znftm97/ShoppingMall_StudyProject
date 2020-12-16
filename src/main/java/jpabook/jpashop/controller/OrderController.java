@@ -6,6 +6,7 @@ import jpabook.jpashop.domain.OrderItem;
 import jpabook.jpashop.domain.OrderStatus;
 import jpabook.jpashop.domain.item.Item;
 import jpabook.jpashop.repository.ItemRepository;
+import jpabook.jpashop.repository.OrderItemRepository;
 import jpabook.jpashop.repository.OrderItemRepositorySDJ;
 import jpabook.jpashop.repository.order.OrderRepositorySDJ;
 import jpabook.jpashop.service.ItemService;
@@ -37,7 +38,7 @@ public class OrderController {
     private final OrderRepositorySDJ orderSdj;
     private final OrderItemRepositorySDJ orderItemSdj;
     private final ItemRepository itemRepository;
-    /*private final OrderItemRepository orderItemRepository;*/
+    private final OrderItemRepository orderItemRepository;
 
     //주문 화면
     @GetMapping("/order")
@@ -76,6 +77,7 @@ public class OrderController {
     public String cancelOrder(@PathVariable("orderId") Long orderId){
         orderService.cancelOrder(orderId);
         return "redirect:/orders";
+
     }
     /*******장바구니 *******/
 
@@ -85,11 +87,6 @@ public class OrderController {
         Order order = orderSdj.findByOrderId(orderId);
 
         orderService.statusChangeOrder(orderId);
-
-        /*Item item = order.getOrderItems().get(0).getItem();
-        int count = order.getOrderItems().get(0).getCount();
-
-        itemService.removeStock(item, count);*/
 
         for (int i = 0; i < order.getOrderItems().size(); i++) {
             Item item = order.getOrderItems().get(i).getItem();

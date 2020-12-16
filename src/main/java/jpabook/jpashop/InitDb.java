@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
+import java.time.LocalDateTime;
 
 /**
  * 2개의 주문
@@ -160,7 +161,14 @@ public class InitDb {
             Order order7 = Order.createBasket(member7, delivery7, orderItem7, orderItem8);
             em.persist(order7);
 
+            Coupon coupon1 = createCoupon("연말 기념", LocalDateTime.now(), 10L);
+            em.persist(coupon1);
 
+            Coupon coupon2 = createCoupon("클스마스 기념", LocalDateTime.now(), 20L);
+            em.persist(coupon2);
+
+            Coupon coupon3 = createCoupon("새해 기념", LocalDateTime.now(), 30L);
+            em.persist(coupon3);
 
         } // dbInit3
 
@@ -204,6 +212,15 @@ public class InitDb {
             member.setAddress(new Address(city, street, zipcode));
             em.persist(member);
             return member;
+        }
+
+        private Coupon createCoupon(String name, LocalDateTime localDateTime, Long discountRate) {
+            Coupon coupon = new Coupon();
+            coupon.setCouponName(name);
+            coupon.setInitDate(localDateTime);
+            coupon.setDiscountRate(discountRate);
+            em.persist(coupon);
+            return coupon;
         }
     } // InitService
 

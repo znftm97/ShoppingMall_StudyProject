@@ -36,6 +36,9 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus status; // 주문 상태 [ORDER, CANCLE]
 
+    @OneToOne(mappedBy = "order", fetch = FetchType.LAZY)
+    private Coupon coupon;
+
     //== 연관관계 메서드 ==//
     public void setMember(Member member){
         this.member = member;
