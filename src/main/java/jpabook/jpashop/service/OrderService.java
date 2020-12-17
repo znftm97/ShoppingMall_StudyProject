@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -19,10 +18,39 @@ public class OrderService {
     private final MemberRepository memberRepository;
     private final ItemRepository itemRepository;
     private final OrderItemRepositorySDJ orderItemRepositorySDJ;
+    private final CouponRepositorySDJ couponRepositorySdj;
 
     /**
      * 주문
      */
+    @Transactional
+    public Long orderWithCoupon(Long memberId, Long itemId, int count, Long couponId){
+        //엔티티 조회
+        Member member = memberRepository.findOne(memberId);
+        Item item = itemRepository.findOne(itemId);
+        Coupon coupon = couponRepositorySdj.findByCoupon(couponId);
+
+        //배송정보 생성
+        Delivery delivery = new Delivery();
+        delivery.setAddress(member.getAddress());
+
+        //금액 할인
+        int itemPrice = item.getPrice(); // 100000
+        int discountRate = coupon.getDiscountRate(); // 10프로
+        int itemDiscountPrice = itemPrice - (itemPrice/discountRate); // 90000원 (10000원 할인)
+
+        //주문상품 생성
+        OrderItem orderItem = OrderItem.createOrderItem(item, itemDiscountPrice, count);
+
+        //주문 생성
+        Order order = Order.createOrderWithCoupon(member, delivery, coupon, orderItem);
+
+        //주문 저장
+        orderRepository.save(order);
+
+        return order.getId();
+    }
+
     @Transactional
     public Long order(Long memberId, Long itemId, int count){
         //엔티티 조회
@@ -46,6 +74,35 @@ public class OrderService {
     }
 
     //장바구니에 담기
+    @Transactional
+    public Long orderBasketWithCoupon(Long memberId, Long itemId, int count, Long couponId){
+        //엔티티 조회
+        Member member = memberRepository.findOne(memberId);
+        Item item = itemRepository.findOne(itemId);
+        Coupon coupon = couponRepositorySdj.findByCoupon(couponId);
+
+
+        //배송정보 생성
+        Delivery delivery = new Delivery();
+        delivery.setAddress(member.getAddress());
+
+        //금액 할인
+        int itemPrice = item.getPrice();
+        int discountRate = coupon.getDiscountRate();
+        int itemDiscountPrice = itemPrice - (itemPrice % itemPrice);
+
+        //주문상품 생성
+        OrderItem orderItem = OrderItem.createOrderItemBasket(item, itemDiscountPrice, count);
+
+        //주문 생성
+        Order order = Order.createBasketWithCoupon(member, delivery, coupon, orderItem);
+
+        //주문 저장
+        orderRepository.save(order);
+
+        return order.getId();
+    }
+
     @Transactional
     public Long orderBasket(Long memberId, Long itemId, int count){
         //엔티티 조회
@@ -91,5 +148,9 @@ public class OrderService {
     //검색
     public List<Order> findOrders(OrderSearch orderSearch){
         return orderRepository.findAllByString(orderSearch);
+    }
+
+    public List<Coupon> findCoupons() {
+        return couponRepositorySdj.findAll();
     }
 }

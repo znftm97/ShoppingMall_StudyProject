@@ -27,6 +27,16 @@
         </div>
 
         <div class="form-group">
+            <label for="coupon">쿠폰</label>
+            <select name="couponId" id="coupon" class="form-control">
+                <option value="">쿠폰선택</option>
+                <option th:each="coupon : ${coupons}"
+                        th:value="${coupon.id}"
+                        th:text="${coupon.couponName +' - '+ coupon.getDiscountRate()} + ' % 할인'"/>
+            </select>
+        </div>
+
+        <div class="form-group">
             <label for="count">주문수량</label>
             <input type="number" name="count" class="form-control" id="count"
                    placeholder="주문 수량을 입력하세요">

@@ -1,10 +1,11 @@
 package jpabook.jpashop.controller;
 
+import jpabook.jpashop.domain.Coupon;
 import jpabook.jpashop.domain.Member;
 import jpabook.jpashop.domain.Order;
-import jpabook.jpashop.domain.OrderItem;
 import jpabook.jpashop.domain.OrderStatus;
 import jpabook.jpashop.domain.item.Item;
+import jpabook.jpashop.repository.CouponRepositorySDJ;
 import jpabook.jpashop.repository.ItemRepository;
 import jpabook.jpashop.repository.OrderItemRepository;
 import jpabook.jpashop.repository.OrderItemRepositorySDJ;
@@ -14,9 +15,7 @@ import jpabook.jpashop.service.MemberService;
 import jpabook.jpashop.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,7 +25,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -39,15 +37,18 @@ public class OrderController {
     private final OrderItemRepositorySDJ orderItemSdj;
     private final ItemRepository itemRepository;
     private final OrderItemRepository orderItemRepository;
+    private final CouponRepositorySDJ couponSdj;
 
     //주문 화면
     @GetMapping("/order")
     public String createForm(Model model) {
         List<Member> members = memberService.findMembers();
         List<Item> items = itemService.findItems();
+        List<Coupon> coupons = orderService.findCoupons();
 
         model.addAttribute("members", members);
         model.addAttribute("items", items);
+        model.addAttribute("coupons", coupons);
 
         return "/order/orderForm";
     }
@@ -66,9 +67,11 @@ public class OrderController {
     @PostMapping("/order")
     public String order(@RequestParam("memberId") Long memberId,
                         @RequestParam("itemId") Long itemId,
-                        @RequestParam("count") int count){
+                        @RequestParam("count") int count,
+                        @RequestParam("couponId") Long couponId
+                        ){
 
-        orderService.order(memberId, itemId, count);
+        orderService.orderWithCoupon(memberId, itemId, count, couponId);
         return "redirect:/orders";
     }
 
@@ -109,10 +112,12 @@ public class OrderController {
     @PostMapping("/baskets")
     public String basket(@RequestParam("memberId") Long memberId,
                         @RequestParam("itemId") Long itemId,
-                        @RequestParam("count") int count){
+                        @RequestParam("count") int count,
+                         @RequestParam("couponId") Long couponId
+                         ){
 
         // 장바구니에 담는 서비스 로직
-        orderService.orderBasket(memberId, itemId, count);
+        orderService.orderBasketWithCoupon(memberId, itemId, count, couponId);
 
         return "redirect:/baskets";
     }

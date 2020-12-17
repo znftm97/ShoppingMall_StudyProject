@@ -4,7 +4,6 @@ import jpabook.jpashop.domain.item.Album;
 import jpabook.jpashop.domain.item.Book;
 import jpabook.jpashop.domain.item.Movie;
 import jpabook.jpashop.repository.order.OrderRepositorySDJ;
-import org.aspectj.weaver.ast.Or;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -52,7 +51,7 @@ public class OrderTest {
         OrderItem orderItem1 = OrderItem.createOrderItem(book1, 10000, 1);
 
         Delivery delivery = createDelivery(member1);
-        Order order = Order.createOrder(member1, delivery, orderItem1);
+        Order order = Order.createOrderWithCoupon(member1, delivery, orderItem1);
         em.persist(order);
 
         //2
@@ -65,7 +64,7 @@ public class OrderTest {
         OrderItem orderItem2 = OrderItem.createOrderItem(book2, 20000, 3);
 
         Delivery delivery2 = createDelivery(member2);
-        Order order2 = Order.createOrder(member2, delivery2, orderItem2);
+        Order order2 = Order.createOrderWithCoupon(member2, delivery2, orderItem2);
         em.persist(order2);
 
         // 3
@@ -78,7 +77,7 @@ public class OrderTest {
         OrderItem orderItem3 = OrderItem.createOrderItem(book3, 20000, 3);
 
         Delivery delivery3 = createDelivery(member3);
-        Order order3 = Order.createOrder(member3, delivery3, orderItem3);
+        Order order3 = Order.createOrderWithCoupon(member3, delivery3, orderItem3);
         em.persist(order3);
 
         PageRequest pageRequest = PageRequest.of(0, 2, Sort.by(Sort.Direction.ASC, "id"));

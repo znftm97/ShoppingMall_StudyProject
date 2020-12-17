@@ -36,7 +36,7 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus status; // 주문 상태 [ORDER, CANCLE]
 
-    @OneToOne(mappedBy = "order", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
     private Coupon coupon;
 
     //== 연관관계 메서드 ==//
@@ -55,7 +55,26 @@ public class Order {
         delivery.setOrder(this);
     }
 
+    public void setCoupon(Coupon coupon){
+        this.coupon = coupon;
+        coupon.setOrder(this);
+    }
+
     //==생성 메서드==//
+    public static Order createOrderWithCoupon(Member member, Delivery delivery, Coupon coupon, OrderItem... orderItems){
+        Order order = new Order();
+        order.setMember(member);
+        order.setDelivery(delivery);
+        for(OrderItem orderItem : orderItems){
+            order.addOrderItem(orderItem);
+        }
+        order.setStatus(OrderStatus.ORDER);
+        order.setOrderDate(LocalDateTime.now());
+        order.setCoupon(coupon);
+
+        return order;
+    }
+
     public static Order createOrder(Member member, Delivery delivery, OrderItem... orderItems){
         Order order = new Order();
         order.setMember(member);
@@ -70,6 +89,20 @@ public class Order {
     }
 
     //==장바구니기능 생성 메서드==//
+    public static Order createBasketWithCoupon(Member member, Delivery delivery, Coupon coupon, OrderItem... orderItems){
+        Order order = new Order();
+        order.setMember(member);
+        order.setDelivery(delivery);
+        for(OrderItem orderItem : orderItems){
+            order.addOrderItem(orderItem);
+        }
+        order.setStatus(OrderStatus.BASKET);
+        order.setOrderDate(LocalDateTime.now());
+        order.setCoupon(coupon);
+
+        return order;
+    }
+
     public static Order createBasket(Member member, Delivery delivery, OrderItem... orderItems){
         Order order = new Order();
         order.setMember(member);
