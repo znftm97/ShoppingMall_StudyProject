@@ -71,7 +71,12 @@ public class OrderController {
                         @RequestParam("couponId") Long couponId
                         ){
 
-        orderService.orderWithCoupon(memberId, itemId, count, couponId);
+        if(couponId == null) {
+            orderService.order(memberId, itemId, count);
+        }
+        else {
+            orderService.orderWithCoupon(memberId, itemId, count, couponId);
+        }
         return "redirect:/orders";
     }
 

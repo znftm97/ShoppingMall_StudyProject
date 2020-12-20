@@ -36,7 +36,8 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus status; // 주문 상태 [ORDER, CANCLE]
 
-    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "coupon_id")
     private Coupon coupon;
 
     //== 연관관계 메서드 ==//
@@ -57,7 +58,6 @@ public class Order {
 
     public void setCoupon(Coupon coupon){
         this.coupon = coupon;
-        coupon.setOrder(this);
     }
 
     //==생성 메서드==//

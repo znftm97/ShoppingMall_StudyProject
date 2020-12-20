@@ -50,13 +50,10 @@ public class InitDb {
             Book book1 = createBook("JPA1 Book", 10000, 100);
             em.persist(book1);
 
-            Coupon coupon1 = createCoupon("연말 기념", LocalDateTime.now(), 10);
-            em.persist(coupon1);
-
             OrderItem orderItem1 = OrderItem.createOrderItem(book1, 10000, 1);
 
             Delivery delivery = createDelivery(member);
-            Order order = Order.createOrderWithCoupon(member, delivery, coupon1, orderItem1);
+            Order order = Order.createOrder(member, delivery, orderItem1);
             em.persist(order);
 
 
@@ -71,11 +68,8 @@ public class InitDb {
 
             OrderItem orderItem1 = OrderItem.createOrderItem(book1, 20000, 3);
 
-            Coupon coupon2 = createCoupon("클스마스 기념", LocalDateTime.now(), 20);
-            em.persist(coupon2);
-
             Delivery delivery = createDelivery(member);
-            Order order = Order.createOrderWithCoupon(member, delivery, coupon2, orderItem1);
+            Order order = Order.createOrder(member, delivery, orderItem1);
             em.persist(order);
         } // dbInit2
 
@@ -132,48 +126,45 @@ public class InitDb {
             Movie movie6 = createMovie("m", 100, 100);
             em.persist(movie6);
 
-            Coupon coupon3 = createCoupon("새해 기념", LocalDateTime.now(), 30);
-            em.persist(coupon3);
-
-            Coupon coupon4 = createCoupon("qwer", LocalDateTime.now(), 30);
-            em.persist(coupon3);
-
             OrderItem orderItem1 = OrderItem.createOrderItem(album5, 100, 2);
             Delivery delivery1 = createDelivery(member1);
-            Order order1 = Order.createOrderWithCoupon(member1, delivery1, coupon3, orderItem1);
+            Order order1 = Order.createOrder(member1, delivery1, orderItem1);
             em.persist(order1);
 
             OrderItem orderItem2 = OrderItem.createOrderItem(album6, 100, 20);
             Delivery delivery2 = createDelivery(member2);
-            Order order2 = Order.createOrderWithCoupon(member2, delivery2, coupon3, orderItem2);
+            Order order2 = Order.createOrder(member2, delivery2, orderItem2);
             em.persist(order2);
 
             OrderItem orderItem3 = OrderItem.createOrderItem(movie1, 100, 30);
             Delivery delivery3 = createDelivery(member3);
-            Order order3 = Order.createOrderWithCoupon(member3, delivery3, coupon3, orderItem3);
+            Order order3 = Order.createOrder(member3, delivery3, orderItem3);
             em.persist(order3);
 
             OrderItem orderItem4 = OrderItem.createOrderItem(album2, 100, 40);
             Delivery delivery4 = createDelivery(member4);
-            Order order4 = Order.createOrderWithCoupon(member4, delivery4, coupon3, orderItem4);
+            Order order4 = Order.createOrder(member4, delivery4, orderItem4);
             em.persist(order4);
 
             OrderItem orderItem5 = OrderItem.createOrderItemBasket(album2, 100, 10);
             Delivery delivery5 = createDelivery(member5);
-            Order order5 = Order.createBasketWithCoupon(member5, delivery5, coupon3, orderItem5);
+            Order order5 = Order.createOrder(member5, delivery5, orderItem5);
             em.persist(order5);
 
             OrderItem orderItem6 = OrderItem.createOrderItemBasket(movie3, 100, 20);
             Delivery delivery6 = createDelivery(member6);
-            Order order6 = Order.createBasketWithCoupon(member6, delivery6, coupon3, orderItem6);
+            Order order6 = Order.createBasket(member6, delivery6, orderItem6);
             em.persist(order6);
 
             OrderItem orderItem8 = OrderItem.createOrderItemBasket(album5, 100, 30);
 
             OrderItem orderItem7 = OrderItem.createOrderItemBasket(album3, 100, 30);
             Delivery delivery7 = createDelivery(member7);
-            Order order7 = Order.createBasketWithCoupon(member7, delivery7, coupon3, orderItem7, orderItem8);
+            Order order7 = Order.createBasket(member7, delivery7, orderItem7, orderItem8);
             em.persist(order7);
+
+            Coupon coupon = createCoupon("연말기념", LocalDateTime.now(), 10);
+            em.persist(coupon);
 
         } // dbInit3
 
