@@ -36,8 +36,11 @@ public class OrderService {
 
         //금액 할인
         int itemPrice = item.getPrice(); // 100000
-        int discountRate = coupon.getDiscountRate(); // 10프로
-        int itemDiscountPrice = itemPrice - (itemPrice/discountRate); // 90000원 (10000원 할인)
+        int discountRate = coupon.getDiscountRate(); // ex) 10프로
+        int itemDiscountPrice=0; // 할인된 가격
+        if(discountRate != 0) {
+            itemDiscountPrice = itemPrice - (itemPrice/discountRate); // 90000원 (10000원 할인)
+        }
 
         //주문상품 생성
         OrderItem orderItem = OrderItem.createOrderItem(item, itemDiscountPrice, count);
@@ -87,9 +90,12 @@ public class OrderService {
         delivery.setAddress(member.getAddress());
 
         //금액 할인
-        int itemPrice = item.getPrice();
-        int discountRate = coupon.getDiscountRate();
-        int itemDiscountPrice = itemPrice - (itemPrice % itemPrice);
+        int itemPrice = item.getPrice(); // 100000
+        int discountRate = coupon.getDiscountRate(); // ex) 10프로
+        int itemDiscountPrice=0; // 할인된 가격
+        if(discountRate != 0) {
+            itemDiscountPrice = itemPrice - (itemPrice/discountRate); // 90000원 (10000원 할인)
+        }
 
         //주문상품 생성
         OrderItem orderItem = OrderItem.createOrderItemBasket(item, itemDiscountPrice, count);

@@ -121,8 +121,12 @@ public class OrderController {
                          @RequestParam("couponId") Long couponId
                          ){
 
-        // 장바구니에 담는 서비스 로직
-        orderService.orderBasketWithCoupon(memberId, itemId, count, couponId);
+        if(couponId == null) {
+            orderService.orderBasket(memberId, itemId, count);
+        }
+        else {
+            orderService.orderBasketWithCoupon(memberId, itemId, count, couponId);
+        }
 
         return "redirect:/baskets";
     }

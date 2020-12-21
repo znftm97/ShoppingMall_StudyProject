@@ -32,7 +32,7 @@
                 <th>대표상품 이름</th>
                 <th>대표상품 주문가격</th>
                 <th>대표상품 주문수량</th>
-                <th>쿠폰명</th>
+                <th>쿠폰명 + 할인율</th>
                 <th>상태</th>
                 <th>일시</th>
                 <th></th>
@@ -48,7 +48,7 @@
                 <td th:text="${order.orderItems[0].count}"></td>
 
                 <td th:if="${order.coupon} == null" th:text="'쿠폰 없음'"></td>
-                <td th:if="${order.coupon} != null" th:text="'쿠폰 있음'"></td>
+                <td th:if="${order.coupon} != null" th:text="${order.coupon.couponName} + ${order.coupon.discountRate} + '%'"></td>
 
                 <td th:text="${order.status}"></td>
                 <td th:text="${order.orderDate}"></td>
