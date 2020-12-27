@@ -6,6 +6,25 @@
     <div th:replace="fragments/bodyHeader :: bodyHeader" />
 
     <div>
+       <div>
+            <form th:object="${MemberSearchCondition}" class="form-inline" action="/members/search">
+                <div class="form-group mb-2">
+                    <input type="text" id="name" name="name" class="form-control" placeholder="회원명"/>
+                </div>
+                <div class="form-group mb-2">
+                    <input type="text" id="id" name="id" class="form-control" placeholder="id"/>
+                </div>
+                <!--<div class="form-group mx-sm-1 mb-2">
+                    <select>
+                        <option value="">선택</option>
+                        <option id="id" name="id">id</option>
+                        <option id="name" name="name">이름</option>
+                    </select>
+                </div>-->
+                <button type="submit" class="btn btn-primary mb-2">검색</button>
+            </form>
+       </div>
+
         <table class="table table-striped">
             <thead>
                 <tr>

@@ -15,7 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
@@ -60,9 +59,11 @@ public class MemberController {
     }
 
     //이름으로 검색
-    @GetMapping("/test")
-    public Page<MemberDto> searchMemeber(MemberSearchCondition condition, Pageable pageable){
-        return sdj.searchPageUsername(condition, pageable);
+    @GetMapping("/members/search")
+    public String searchMember(MemberSearchCondition condition, @PageableDefault(size = 5, sort = "id") Pageable pageable, Model model){
+        Page<MemberDto> results = sdj.searchMember(condition, pageable);
+        model.addAttribute("members", results);
+        return "/members/memberList";
     }
 
 }
