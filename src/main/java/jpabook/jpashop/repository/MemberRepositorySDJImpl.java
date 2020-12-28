@@ -31,7 +31,8 @@ public class MemberRepositorySDJImpl implements MemberRepositorySDJCustom {
                         member.address))
                 .from(member)
                 .where(
-                        usernameEq(condition.getName()).or(idEq(condition.getId()))
+                        usernameEq(condition.getName()),
+                        idEq(condition.getId())
                 )
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())

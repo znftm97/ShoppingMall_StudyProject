@@ -7,4 +7,6 @@ public class MemberSearchCondition {
 
     private Long id;
     private String name;
+    private String searchWord;
+    private String searchOption;
 }
